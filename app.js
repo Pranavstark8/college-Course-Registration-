@@ -36,6 +36,7 @@ var PORT;
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/student', studentRoutes);
@@ -48,7 +49,7 @@ app.get('/', function (req, res) {
   res.send(message.getWelcomeMessage());
 });
 
-app.get('/index', (req, res) => {
+app.get('/login', (req, res) => {
   res.render('index');
 });
 
@@ -229,6 +230,11 @@ app.post('/teacher/course/:courseId/reject/:studentId', auth(['teacher']), async
     console.error('Error rejecting student:', error);
     res.status(500).send('Error rejecting student');
   }
+});
+
+app.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/login');
 });
 
 if (process.env.PORT) {

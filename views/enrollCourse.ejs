@@ -7,33 +7,159 @@
     <title>Enroll in New Course</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* General Styling */
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+            padding: 20px;
+            color: #34495e;
+        }
+
+        .container {
+            max-width: 700px;
+        }
+
+        /* Main Heading Styling */
+        h2 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Subheading Styling */
+        h4 {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2980b9;
+            text-shadow: 0.5px 0.5px 3px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            margin-top: 1.5rem;
+            border-bottom: 2px solid #2980b9;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        /* Styling for List Group Items */
+        .list-group-item {
+            border-radius: 10px;
+            margin-bottom: 12px;
+            padding: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            background-color: #ffffff;
+            cursor: pointer;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .list-group-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
         /* Styling for inactive courses */
         .inactive-course {
             background-color: #f8d7da;
             color: #721c24;
+            border: 1px solid #f5c6cb;
+            opacity: 0.8;
+        }
+
+        .inactive-course:hover {
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* Styling for Buttons */
+        .btn-primary {
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 6px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(41, 128, 185, 0.2);
+        }
+
+        .btn-secondary {
+            padding: 8px 16px;
+            font-size: 0.9em;
+            border-radius: 6px;
+            color: #fff;
+            background-color: #adb5bd;
+            cursor: not-allowed;
+            border: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2>Enroll in a New Course</h2>
+        <h2 class="text-center">Enroll in a New Course</h2>
 
         <!-- Available Courses for the current semester -->
         <h4 class="mt-5">Available Courses for Semester <%= semester %>
         </h4>
         <ul class="list-group">
             <% if (courses.length===0) { %>
-                <li class="list-group-item">No courses available for enrollment</li>
+                <li class="list-group-item text-center">No courses available for enrollment</li>
                 <% } else { %>
                     <% courses.forEach(course=> { %>
                         <!-- Conditional class for inactive courses -->
                         <li
-                            class="list-group-item d-flex justify-content-between <%= course.status ? '' : 'inactive-course' %>">
+                            class="list-group-item d-flex justify-content-between align-items-center <%= course.status ? '' : 'inactive-course' %>">
                             <div>
                                 <strong>
-                                    <%= course.title %> | Teacher: <%= course.teacher.name %>
-                                </strong> - <%= course.code %> | Credits: <%= course.credits %>
+                                    <%= course.title %>
+                                </strong> | Teacher: <%= course.teacher.name %><br>
+                                    <small>Course Code: <%= course.code %> | Credits: <%= course.credits %></small>
                             </div>
                             <% if (course.status) { %>
                                 <!-- Enroll button for active courses -->

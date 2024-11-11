@@ -1,4 +1,3 @@
-<!-- views/viewUsers.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +6,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+            color: #34495e;
+            padding: 20px;
+        }
+
+        /* Main Heading */
+        h2 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Section Headings */
+        label.form-label {
+            font-size: 1.2em;
+            color: #2980b9;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Dropdown Styling */
+        .form-select {
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .form-select:focus {
+            box-shadow: 0 0 8px rgba(41, 128, 185, 0.5);
+            border-color: #3498db;
+        }
+
+        /* Card Styling for User List */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Styling User Name */
+        .card-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3498db;
+            text-shadow: 0.5px 0.5px 5px rgba(0, 0, 0, 0.15);
+            transition: color 0.3s ease;
+        }
+
+        /* Hover effect on User Name */
+        .card:hover .card-title {
+            color: #2980b9;
+        }
+
+        /* Animation for User Cards */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #userList .card {
+            animation: fadeIn 0.4s ease;
+        }
+    </style>
 </head>
 
 <body>
@@ -45,8 +131,9 @@
             <select class="form-select" id="department" onchange="fetchUsers()">
                 <option value="">All Departments</option>
                 <option value="Computer Science">Computer Science</option>
-                <option value="Mathematics">Electronics and Communications</option>
-                <option value="Physics">Data Science and Artificial Intelligence</option>
+                <option value="Electronics and Communications">Electronics and Communications</option>
+                <option value="Data Science and Artificial Intelligence">Data Science and Artificial Intelligence
+                </option>
             </select>
         </div>
 

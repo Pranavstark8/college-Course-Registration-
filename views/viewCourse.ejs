@@ -7,58 +7,121 @@
     <title>View Enrolled Courses</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* General Styling */
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Poppins', sans-serif;
+            padding: 20px;
+            color: #34495e;
+        }
+
+        /* Main Heading (My Courses) Styling */
+        h2 {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Subheadings (Pending, Accepted, Previous Semester Courses) Styling */
+        h4 {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2980b9;
+            text-shadow: 0.5px 0.5px 3px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            margin-top: 1.5rem;
+            border-bottom: 2px solid #2980b9;
+        }
+
+        /* Course List Styling */
+        .list-group-item {
+            border-radius: 10px;
+            margin-bottom: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .list-group-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Background Colors for Different Course Types */
         .pending-course {
-            background-color: #fce5b2;
-            /* Yellow */
+            background-color: #fff6e5;
+            /* Yellow background for pending */
         }
 
         .accepted-course {
-            background-color: #c8e6c9;
-            /* Green */
+            background-color: #e6f5e9;
+            /* Green background for accepted */
         }
 
         .previous-course {
-            background-color: #e1f5fe;
-            /* Light Blue */
+            background-color: #e8f3fc;
+            /* Blue background for previous */
         }
 
-        .course-status {
-            padding: 5px;
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            display: inline-block;
-            margin-left: 10px;
+        /* Detailed Course Information Styling */
+        .course-details {
+            display: none;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #2980b9;
+            font-size: 0.9em;
+            color: #2c3e50;
+            animation: slideDown 0.3s ease;
         }
 
-        .yellow {
-            background-color: yellow;
+        .show {
+            display: block;
         }
 
-        .green {
-            background-color: green;
-        }
+        /* Animation */
+        @keyframes slideDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
 
-        .blue {
-            background-color: blue;
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2>My Courses</h2>
+        <h2 class="text-center mb-4">My Courses</h2>
 
         <!-- List Pending Courses -->
         <div class="mt-4">
             <h4>Pending Courses</h4>
             <ul class="list-group">
                 <% pendingCourses.forEach(course=> { %>
-                    <li class="list-group-item pending-course">
+                    <li class="list-group-item pending-course" onclick="toggleDetails('pending-<%= course.code %>')">
                         <strong>
                             <%= course.title %> | Teacher: <%= course.teacher.name %>
-                        </strong> - <%= course.code %> | Credits: <%= course.credits %>
-                                <span class="course-status yellow"></span> <!-- Yellow signal for pending -->
+                        </strong>
+                        <div class="course-details" id="pending-<%= course.code %>">
+                            <p><strong>Course Code:</strong>
+                                <%= course.code %>
+                            </p>
+                            <p><strong>Credits:</strong>
+                                <%= course.credits %>
+                            </p>
+                        </div>
                     </li>
                     <% }) %>
             </ul>
@@ -69,11 +132,18 @@
             <h4>Accepted Courses</h4>
             <ul class="list-group">
                 <% acceptedCourses.forEach(course=> { %>
-                    <li class="list-group-item accepted-course">
+                    <li class="list-group-item accepted-course" onclick="toggleDetails('accepted-<%= course.code %>')">
                         <strong>
                             <%= course.title %> | Teacher: <%= course.teacher.name %>
-                        </strong> - <%= course.code %> | Credits: <%= course.credits %>
-                                <span class="course-status green"></span> <!-- Green signal for accepted -->
+                        </strong>
+                        <div class="course-details" id="accepted-<%= course.code %>">
+                            <p><strong>Course Code:</strong>
+                                <%= course.code %>
+                            </p>
+                            <p><strong>Credits:</strong>
+                                <%= course.credits %>
+                            </p>
+                        </div>
                     </li>
                     <% }) %>
             </ul>
@@ -84,16 +154,32 @@
             <h4>Previous Semester Courses</h4>
             <ul class="list-group">
                 <% previous_courses.forEach(course=> { %>
-                    <li class="list-group-item previous-course">
+                    <li class="list-group-item previous-course" onclick="toggleDetails('previous-<%= course.code %>')">
                         <strong>
                             <%= course.title %>
-                        </strong> - <%= course.code %> | Credits: <%= course.credits %>
-                                <span class="course-status blue"></span> <!-- Blue signal for previous semester -->
+                        </strong>
+                        <div class="course-details" id="previous-<%= course.code %>">
+                            <p><strong>Course Code:</strong>
+                                <%= course.code %>
+                            </p>
+                            <p><strong>Credits:</strong>
+                                <%= course.credits %>
+                            </p>
+                        </div>
                     </li>
                     <% }) %>
             </ul>
         </div>
     </div>
+
+    <script>
+        function toggleDetails(id) {
+            const details = document.getElementById(id);
+            if (details) {
+                details.classList.toggle('show');
+            }
+        }
+    </script>
 </body>
 
 </html>

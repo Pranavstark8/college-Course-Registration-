@@ -1,4 +1,3 @@
-<!-- views/dashboard.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,23 +6,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Enhanced Background with Floating Animations */
+        body {
+            background: radial-gradient(circle at top, #f5f7fa, #c3cfe2);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Animated Bubbles */
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: moveBubbles 20s infinite alternate;
+            z-index: 0;
+        }
+
+        body::before {
+            top: -10%;
+            left: -10%;
+        }
+
+        body::after {
+            bottom: -10%;
+            right: -15%;
+        }
+
+        @keyframes moveBubbles {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(50px, -50px) scale(1.2);
+            }
+
+            100% {
+                transform: translate(-50px, 50px) scale(1);
+            }
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            animation: slideIn 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logout Button Styling */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            color: #ffffff;
+            background-color: #e74c3c;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            /* Remove underline */
+            transition: all 0.3s ease;
+            animation: slideInFromRight 1s ease forwards;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        /* Logout Button Animation */
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Heading and Text Styling */
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #34495e;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-info {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+
+        .btn-warning {
+            background-color: #f39c12;
+            border-color: #f39c12;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: none;
+        }
+
+        .d-flex {
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Subtle Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center">Welcome, <%= user.name %>
+    <!-- Logout Button positioned at the top-right corner of the page -->
+    <a href="/logout" class="logout-btn">Logout</a>
+
+    <div class="container">
+        <h2>Welcome, <%= user.name %>
         </h2>
-        <p class="text-center">Role: <%= user.role %>
+        <p>Role: <%= user.role %>
         </p>
         <div class="d-flex justify-content-center">
             <% if (user.role==='student' ) { %>
-                <a href="/enrolled-courses" class="btn btn-success mx-2">View My Courses</a>
-                <a href="/course-registration" class="btn btn-success mx-2">Course Registration </a>
+                <a href="/enrolled-courses" class="btn btn-success">View My Courses</a>
+                <a href="/course-registration" class="btn btn-success">Course Registration</a>
                 <% } else if (user.role==='teacher' ) { %>
-                    <a href="/teacher-dashboard" class="btn btn-info mx-2">Teacher Dashboard</a>
+                    <a href="/teacher-dashboard" class="btn btn-info">Teacher Dashboard</a>
                     <% } else if (user.role==='admin' ) { %>
-                        <a href="/view-users" class="btn btn-warning mx-2">View Users</a>
-                        <a href="/create-users" class="btn btn-warning mx-2">Create Users</a>
+                        <a href="/view-users" class="btn btn-warning">View Users</a>
+                        <a href="/create-users" class="btn btn-warning">Create Users</a>
                         <% } %>
         </div>
     </div>
