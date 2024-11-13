@@ -28,6 +28,8 @@ const path = require('path');
 const auth = require('./middleware/auth');
 const Course = require('./models/Course');
 const Student = require('./models/Student');
+const { aggregate } = require('./models/User');
+const Teacher = require('./models/Teacher');
 app.use(cookieParser())
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -104,6 +106,30 @@ cron.schedule('0 0 1 1,7 *', async () => {
     console.error('Error updating student semesters:', error);
   }
 });
+
+app.get('/profile', auth(['student', 'teacher', 'admin']), async (req, res) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+
+  const user = req.user;
+  let roleData = null;
+
+  try {
+    if (user.role === 'student') {
+      roleData = await Student.findOne({ user: user._id })
+        .populate('pendingCourses acceptedCourses', 'name');
+    } else if (user.role === 'teacher') {
+      roleData = await Teacher.findOne({ user: user._id });
+    }
+
+    res.render('profile', { user, roleData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error loading profile');
+  }
+});
+
 
 app.get('/enrolled-courses', auth(['student']), async (req, res) => {
   try {
