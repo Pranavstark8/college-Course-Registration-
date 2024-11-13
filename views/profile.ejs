@@ -7,7 +7,7 @@
     <title>Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Background with Animation */
+        /* Body Styling */
         body {
             display: flex;
             justify-content: center;
@@ -15,138 +15,122 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            background: radial-gradient(circle at top, #f5f7fa, #c3cfe2);
-            overflow: hidden;
-            animation: gradientAnimation 10s ease infinite;
+            background: linear-gradient(135deg, #e8f0f2, #ffffff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #34495e;
         }
 
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Container Styling */
+        /* ID Card Container */
         .container {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ffffff, #f7fafc);
+            width: 360px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: transform 0.3s ease;
-            animation: slideIn 1s ease;
+            border: 1px solid #e1e8ed;
+            position: relative;
         }
 
-        .container:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Keyframes for Slide-In Animation */
-        @keyframes slideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Header and Text Styling */
-        h2,
-        h3 {
-            color: #34495e;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            opacity: 0.9;
-            text-transform: capitalize;
-        }
-
-        h3 {
-            font-size: 1.8rem;
-            color: #3498db;
-            margin-top: 30px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            transition: color 0.3s ease;
-        }
-
-        /* Profile Icon */
+        /* Profile Icon Circle */
         .icon {
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: #3498db;
-            margin-bottom: 20px;
-            animation: bounce 1.5s infinite;
+            background: linear-gradient(135deg, #ebf5fb, #d6eaf8);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-15px);
-            }
-
-            60% {
-                transform: translateY(-7px);
-            }
+        /* Header Styling */
+        h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
-        /* Hover Effect for Paragraph */
-        p:hover {
+        /* Subheader Styling */
+        h3 {
+            font-size: 1.3rem;
+            color: #2980b9;
+            font-weight: 500;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #d6eaf8;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        /* Details Styling */
+        p {
+            font-size: 1rem;
+            color: #5d6d7e;
+            margin: 6px 0;
+        }
+
+        /* Highlight for Important Text */
+        .highlight {
+            font-size: 1.05rem;
             color: #34495e;
+            font-weight: 600;
+            padding: 4px 8px;
+            background-color: #eaf2f8;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        /* Divider Line */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: #e1e8ed;
+            margin: 15px 0;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <!-- Animated Profile Icon -->
+        <!-- Profile Icon -->
         <div class="icon">👤</div>
 
         <!-- Profile Details -->
-        <h2>Profile of <%= user.name %>
+        <h2>
+            <%= user.name %>
         </h2>
-        <p>Email: <%= user.username %>
+        <p class="highlight">
+            <%= user.username %>
         </p>
-        <p>Role: <%= user.role %>
+        <p class="highlight">Role: <%= user.role %>
         </p>
+
+        <!-- Divider Line -->
+        <div class="divider"></div>
 
         <!-- Role-Specific Information -->
         <% if (user.role==='student' && roleData) { %>
             <h3>Student Profile</h3>
-            <p>Semester: <%= roleData.semester %>
-            </p>
-            <p>Start Year: <%= roleData.startYear %>
-            </p>
-            <p>End Year: <%= roleData.endYear %>
-            </p>
+            <p>Semester: <span class="highlight">
+                    <%= roleData.semester %>
+                </span></p>
+            <p>Start Year: <span class="highlight">
+                    <%= roleData.startYear %>
+                </span></p>
+            <p>End Year: <span class="highlight">
+                    <%= roleData.endYear %>
+                </span></p>
             <% } else if (user.role==='teacher' && roleData) { %>
                 <h3>Teacher Profile</h3>
-                <p>Department: <%= roleData.department %>
-                </p>
+                <p>Department: <span class="highlight">
+                        <%= roleData.department %>
+                    </span></p>
                 <% } else if (user.role==='admin' ) { %>
                     <h3>Admin Profile</h3>
                     <p>Admins do not have specific data beyond their basic profile information.</p>
