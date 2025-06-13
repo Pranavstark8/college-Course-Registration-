@@ -37,7 +37,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.0",
     "nconf": "*",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "axios": "^1.7.7",
