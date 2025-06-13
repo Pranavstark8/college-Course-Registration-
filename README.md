@@ -16,3 +16,41 @@ imagePullSecrets:
 pullSecret: regsecret
 ```
 
+
+
+# Course Management System
+
+This project is a **Course Management System** built using **Node.js** and **Express.js**. The application provides functionality for managing users (students, teachers, and admins), courses, and enrollment processes with role-based authentication. It includes automated schedulers to manage course and semester updates.
+
+---
+
+## Features
+
+### 1. **Role-Based Authentication**
+   - **Admin**: Can create and view users.
+   - **Teacher**: Can manage courses and students.
+   - **Student**: Can view and enroll in courses.
+
+### 2. **Course Management**
+   - Teachers can view courses they manage and students enrolled in them.
+   - Students can view and enroll in courses for their semester.
+   - Admins have access to user creation and management views.
+
+### 3. **Automated Tasks**
+   - **Course Status Update**: Closes courses older than 10 days using a daily scheduler.
+   - **Semester Update**: Updates students' semesters twice a year (January 1st and July 1st).
+
+### 4. **Dynamic Views**
+   - **Login Page**: A login screen for all users.
+   - **Dashboard**: Displays a user's role-specific information.
+   - **Course Enrollment**: Shows available courses for a student to enroll in.
+   - **Course Management**: Allows teachers to accept/reject students in their courses.
+
+### 5. **APIs and Middleware**
+   - Role-based middleware for securing routes.
+   - RESTful APIs for fetching and updating data.
+
+---
+
+
+
